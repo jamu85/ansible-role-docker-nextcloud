@@ -1,0 +1,15 @@
+<VirtualHost *:80>
+
+        Header always set Strict-Transport-Security "max-age=15552000; includeSubDomains"
+
+        Redirect 301 /.well-known/carddav https://{{ docker_nextcloud_url }}/remote.php/dav
+        Redirect 301 /.well-known/caldav  https://{{ docker_nextcloud_url }}/remote.php/dav
+        Redirect 301 /.well-known/webdav  https://{{ docker_nextcloud_url }}/remote.php/dav
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+ 
+</VirtualHost>

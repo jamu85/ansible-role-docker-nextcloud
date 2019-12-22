@@ -1,0 +1,40 @@
+---
+
+- name: create folder structure
+  file:
+    name: "{{ docker_nextcloud_base_dir }}{{ item }}"
+    state: directory
+  with_items:
+    - '/scripts'
+    - '/apache/html'
+    - '/apache/conf'
+    - '/php/conf'
+    - '/mariadb/data'
+    - '/mariadb/conf'
+
+- name: "create network: {{ docker_nextcloud_traefik_network }}"
+  docker_network:
+    name: "{{ docker_nextcloud_traefik_network }}"
+
+- name: include php tasks
+  import_tasks: php.yml
+
+- name: include apache tasks
+  import_tasks: apache.yml
+
+- name: include mariadb tasks
+  import_tasks: mariadb.yml
+
+- name: include nextcloud tasks
+  import_tasks: nextcloud.yml
+
+- name: write docker-compose.yml
+  template:
+    src: 'templates/docker-compose.yml.j2'
+    dest: "{{ docker_nextcloud_base_dir }}/docker-compose.yml"
+
+- name: control container
+  docker_compose:
+    project_src: "{{ docker_nextcloud_base_dir }}"
+    pull: "{{ docker_nextcloud_pull }}"
+    stopped: "{{ docker_nextcloud_stopped }}"

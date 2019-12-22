@@ -1,0 +1,23 @@
+---
+
+- name: set permissions on html data
+  command: "{{ docker_nextcloud_base_dir }}/scripts/set_nextcloud_permissions.sh"
+
+- name: rebuild php-apache
+  docker_compose:
+    project_src: "{{ docker_nextcloud_base_dir }}"
+    services: php-apache
+    build: yes
+
+- name: restart php-apache
+  docker_compose:
+    project_src: "{{ docker_nextcloud_base_dir }}"
+    services: php-apache
+    restarted: yes
+  when: not docker_nextcloud_stopped
+
+- name: restart all
+  docker_compose:
+    project_src: "{{ docker_nextcloud_base_dir }}"
+    restarted: yes
+  when: not docker_nextcloud_stopped

@@ -1,0 +1,34 @@
+<?php
+$CONFIG = array (
+# https://docs.nextcloud.com/server/17/admin_manual/configuration_server/config_sample_php_parameters.html#user-experience
+'default_language' => '{{ docker_nextcloud_language }}',
+'default_locale' => '{{ docker_nextcloud_locale }}',
+
+# https://docs.nextcloud.com/server/17/admin_manual/configuration_server/config_sample_php_parameters.html#apps
+'appcodechecker' => true,
+
+# https://docs.nextcloud.com/server/17/admin_manual/configuration_server/config_sample_php_parameters.html#logging
+'log_type' => 'file',
+'logfile' => '/var/log/nextcloud.log',
+'logfilemode' => 0640,
+'loglevel' => 2,
+'syslog_tag' => 'Nextcloud',
+'logtimezone' => '{{ docker_nextcloud_logtimezone }}',
+
+# https://docs.nextcloud.com/server/17/admin_manual/configuration_server/config_sample_php_parameters.html#memory-caching-backend-configuration
+'memcache.local' => '\OC\Memcache\APCu',
+
+{% if docker_nextcloud_maintenance_mode %}
+# maintenance: https://docs.nextcloud.com/server/17/admin_manual/maintenance/backup.html#maintenance-mode
+'maintenance' => true,
+{% endif %}
+
+{% if docker_nextcloud_trusted_proxies is defined %}
+# https://docs.nextcloud.com/server/17/admin_manual/configuration_server/reverse_proxy_configuration.html
+'trusted_proxies'   => ['{{ docker_nextcloud_trusted_proxies }}'],
+{% endif %}
+
+{% if docker_nextcloud__integrity_check_disabled %}
+'integrity.check.disabled' => true
+{% endif %}
+);

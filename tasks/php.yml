@@ -1,0 +1,16 @@
+---
+
+- name: write Dockerfile for php-apache image
+  template:
+    src: 'templates/php/Dockerfile.j2'
+    dest: "{{ docker_nextcloud_base_dir }}/php/Dockerfile"
+  notify:
+    - rebuild php-apache
+
+- name: Write php configuration
+  copy:
+    src: files/php/conf/{{ item }}
+    dest: "{{ docker_nextcloud_base_dir }}/php/conf/{{ item }}"
+  with_items:
+    - opcache.ini
+    - memory.ini

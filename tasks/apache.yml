@@ -1,0 +1,8 @@
+---
+
+- name: write apache vhost config
+  template:
+    src: templates/apache/conf/nextcloud.conf.j2
+    dest: "{{ docker_nextcloud_base_dir }}/apache/conf/nextcloud.conf"
+  notify:
+    - restart php-apache

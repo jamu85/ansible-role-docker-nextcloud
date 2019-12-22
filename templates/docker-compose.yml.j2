@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  php-apache:
+    build: php
+    volumes:
+      - '{{ docker_nextcloud_base_dir }}/apache/html:/var/www/html'
+      - '{{ docker_nextcloud_base_dir }}/apache/conf/nextcloud.conf:/etc/apache2/sites-available/000-default.conf'
+      - '{{ docker_nextcloud_base_dir }}/data:/data'
+    networks:
+      - {{ docker_nextcloud_traefik_network }}
+      - backend
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nextcloud-http.entrypoints=http"
+      - "traefik.http.routers.nextcloud-http.rule=Host(`{{ docker_nextcloud_url }}`)"
+      - "traefik.http.routers.nextcloud-http.middlewares=https-redirect@file"
+      - "traefik.http.routers.nextcloud-https.entrypoints=https"
+      - "traefik.http.routers.nextcloud-https.rule=Host(`{{ docker_nextcloud_url }}`)"
+      - "traefik.http.routers.nextcloud-https.tls=true"
+      - "traefik.http.routers.nextcloud-https.tls.certresolver=letsencrypt"
+  mariadb:
+    image: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD={{ docker_nextcloud_database_password_root }}
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD={{ docker_nextcloud_database_password_nextcloud }}
+    volumes:
+      - '{{ docker_nextcloud_base_dir }}/mariadb/data:/var/lib/mysql'
+      - '{{ docker_nextcloud_base_dir }}/mariadb/conf:/etc/mysql/conf.d'
+    networks:
+      - backend
+networks:
+  {{ docker_nextcloud_traefik_network }}:
+    external: true
+  backend:

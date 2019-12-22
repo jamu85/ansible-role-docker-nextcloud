@@ -1,0 +1,53 @@
+---
+
+#
+# traefik settings
+#
+
+docker_nextcloud_traefik_enabled: yes
+docker_nextcloud_traefik_network: 'traefik'
+
+#
+# base settings
+#
+
+docker_nextcloud_url: cloud.home.local
+
+#
+# nextcloud
+#
+
+docker_nextcloud_version: '17.0.1'
+docker_nextcloud_language: 'de'
+docker_nextcloud_locale: 'de_CH'
+docker_nextcloud_logtimezone: 'Europe/Zurich'
+docker_nextcloud_maintenance_mode: no
+docker_nextcloud__integrity_check_disabled: no
+
+
+#
+# database
+#
+
+docker_nextcloud_database_password_nextcloud: 'nextcloud-db-password'
+docker_nextcloud_database_password_root: 'root-db-password'
+
+
+#
+# php
+#
+
+docker_nextcloud_php_version: '7.2'
+
+#
+# docker-compose
+#
+
+# always pull images
+docker_nextcloud_pull: no
+
+# stop all containers
+docker_nextcloud_stopped: no
+
+# place for configs and data
+docker_nextcloud_base_dir: /opt/nextcloud

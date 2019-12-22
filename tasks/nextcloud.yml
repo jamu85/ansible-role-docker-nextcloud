@@ -1,0 +1,54 @@
+---
+
+- name: install requirements
+  package:
+    name: unzip
+    state: present
+
+- name: write script to set nextcloud file & folder permissions
+  template:
+    src: templates/scripts/set_nextcloud_permissions.sh.j2
+    dest: "{{ docker_nextcloud_base_dir }}/scripts/set_nextcloud_permissions.sh"
+    mode: '0755'
+
+- name: check for existing installation
+  find: 
+    paths: "{{ docker_nextcloud_base_dir }}/apache/html/"
+  register: filesInHtmlDirectory
+
+- name: "install nextcloud {{ docker_nextcloud_version }}"
+  block:
+    - name: download release to /tmp
+      get_url:
+        url: "https://download.nextcloud.com/server/releases/nextcloud-{{ docker_nextcloud_version }}.zip"
+        dest: '/tmp/'
+    - name: unpack release in /tmp
+      unarchive:
+        src: "/tmp/nextcloud-{{ docker_nextcloud_version }}.zip"
+        dest: '/tmp/'
+        remote_src: yes
+    - name: copy release to html directory
+      copy:
+        src: "/tmp/nextcloud/"
+        dest: "{{ docker_nextcloud_base_dir }}/apache/html/"
+        remote_src: yes
+      notify:
+        - set permissions on html data
+  when: filesInHtmlDirectory.matched == 0
+
+- name: write ansible managed configuration
+  template:
+    src: templates/apache/html/config/ansible.config.php.j2
+    dest: "{{ docker_nextcloud_base_dir }}/apache/html/config/ansible.config.php"
+    owner: www-data
+    group: www-data
+    mode: 0640
+
+- name: create data folder
+  file:
+    name: "{{ docker_nextcloud_base_dir }}/data"
+    state: directory
+    owner: root
+    group: www-data
+    mode: 0770
+  notify: restart php-apache
