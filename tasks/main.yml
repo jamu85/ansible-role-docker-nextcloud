@@ -11,6 +11,7 @@
     - '/php/conf'
     - '/mariadb/data'
     - '/mariadb/conf'
+    - '/mariadb/dumps'
 
 - name: "create network: {{ docker_nextcloud_traefik_network }}"
   docker_network:

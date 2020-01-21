@@ -1,0 +1,2 @@
+#!/bin/bash
+docker exec nextcloud_mariadb /bin/bash -c "/usr/bin/mysqldump -u nextcloud -p{{ docker_nextcloud_database_password_nextcloud }} nextcloud > /mnt/nextcloud_dump.sql"

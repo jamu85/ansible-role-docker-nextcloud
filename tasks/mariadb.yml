@@ -4,3 +4,9 @@
   copy:
     src: files/mariadb/conf/my.cnf
     dest: "{{ docker_nextcloud_base_dir }}/mariadb/conf/my.cnf"
+
+- name: write script to create database dumps
+  template:
+    src: templates/scripts/create_nextcloud_db_dump.sh.j2
+    dest: "{{ docker_nextcloud_base_dir }}/scripts/create_nextcloud_db_dump.sh"
+    mode: '0755'

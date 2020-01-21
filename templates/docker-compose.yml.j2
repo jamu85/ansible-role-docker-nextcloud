@@ -31,6 +31,7 @@ services:
     volumes:
       - '{{ docker_nextcloud_base_dir }}/mariadb/data:/var/lib/mysql'
       - '{{ docker_nextcloud_base_dir }}/mariadb/conf:/etc/mysql/conf.d'
+      - '{{ docker_nextcloud_base_dir }}/mariadb/dumps:/mnt'
     networks:
       - backend
 networks:

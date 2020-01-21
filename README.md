@@ -74,6 +74,7 @@ docker_nextcloud_base_dir: /opt/nextcloud
     ├── mariadb
     │   ├── data                # mariadb files
     │   └── conf                # mariadb configuration
+    |   └── dumps               # nextcloud database dumps
     ├── scripts                 # helper scripts
     ├── data                    # nextclouds data directory
     └── docker-compose.yml
