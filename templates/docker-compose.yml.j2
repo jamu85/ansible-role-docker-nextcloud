@@ -3,7 +3,7 @@ version: "3"
 services:
   php-apache:
     build: php
-    container_name: php-apache
+    container_name: nextcloud_php-apache
     volumes:
       - '{{ docker_nextcloud_base_dir }}/apache/html:/var/www/html'
       - '{{ docker_nextcloud_base_dir }}/apache/conf/nextcloud.conf:/etc/apache2/sites-available/000-default.conf'
@@ -22,7 +22,7 @@ services:
       - "traefik.http.routers.nextcloud-https.tls.certresolver=letsencrypt"
   mariadb:
     image: mariadb
-    container_name: mariadb
+    container_name: nextcloud_mariadb
     environment:
       - MYSQL_ROOT_PASSWORD={{ docker_nextcloud_database_password_root }}
       - MYSQL_DATABASE=nextcloud
