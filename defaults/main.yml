@@ -13,6 +13,18 @@ docker_nextcloud_traefik_network: 'traefik'
 docker_nextcloud_url: cloud.home.local
 
 #
+# collabora (see: https://www.collaboraoffice.com/code/docker/)
+#
+
+docker_nextcloud_url_escaped: cloud\\.home\\.local
+docker_nextcloud_collabora_url: office.home.local
+docker_nextcloud_collabora_admin_console: 'true'
+docker_nextcloud_collabora_user: admin
+docker_nextcloud_collabora_password: p4Ssw0rd!
+# Can be 0-8, or none (turns off logging), fatal, critical, error, warning, notice, information, debug, trace
+docker_nextcloud_collabora_loglevel: warning
+
+#
 # nextcloud
 #
 
