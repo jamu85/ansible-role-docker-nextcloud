@@ -27,6 +27,7 @@ docker_nextcloud_url: cloud.home.local
 # collabora (see: https://www.collaboraoffice.com/code/docker/)
 #
 
+docker_nextcloud_collabora_image_tag: latest
 docker_nextcloud_url_escaped: cloud\\.home\\.local
 docker_nextcloud_collabora_url: office.home.local
 docker_nextcloud_collabora_user: admin
@@ -49,6 +50,7 @@ docker_nextcloud__integrity_check_disabled: no
 # database
 #
 
+docker_nextcloud_mariadb_image_tag: latest
 docker_nextcloud_database_password_nextcloud: 'nextcloud-db-password'
 docker_nextcloud_database_password_root: 'root-db-password'
 
@@ -91,3 +93,13 @@ docker_nextcloud_base_dir: /opt/nextcloud
     └── docker-compose.yml
 
 ```
+
+## Scripts
+
+There are two helper scripts:
+
+```create_nextcloud_db_dump.sh``` creates a nextcloud database dump that is saved as ```nextcloud/mariadb/dumps/nextcloud_dump.sql```. The script
+is generated out of a template with the nextcloud database user's password.
+
+```set_nextcloud_permissions.sh``` is a templated version of the script from the [nextcloud documentation](https://docs.nextcloud.com/server/9.0/admin_manual/installation/installation_wizard.html#setting-strong-directory-permissions. 
+). Use it to set recursively strong folder permissions on the ```nextcloud/apache/html``` directory.
