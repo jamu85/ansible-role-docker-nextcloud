@@ -21,7 +21,7 @@ services:
       - "traefik.http.routers.nextcloud-https.tls=true"
       - "traefik.http.routers.nextcloud-https.tls.certresolver=letsencrypt"
   mariadb:
-    image: mariadb
+    image: mariadb:{{ docker_nextcloud_mariadb_image_tag }}
     container_name: nextcloud_mariadb
     environment:
       - MYSQL_ROOT_PASSWORD={{ docker_nextcloud_database_password_root }}
@@ -35,7 +35,7 @@ services:
     networks:
       - backend
   collabora:
-    image: collabora/code
+    image: collabora/code:{{ docker_nextcloud_collabora_image_tag }}
     container_name: nextcloud_collabora
     environment:
       - domain={{ docker_nextcloud_url_escaped }}

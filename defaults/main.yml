@@ -16,6 +16,7 @@ docker_nextcloud_url: cloud.home.local
 # collabora (see: https://www.collaboraoffice.com/code/docker/)
 #
 
+docker_nextcloud_collabora_image_tag: latest
 docker_nextcloud_url_escaped: cloud\\.home\\.local
 docker_nextcloud_collabora_url: office.home.local
 docker_nextcloud_collabora_admin_console: 'true'
@@ -39,6 +40,7 @@ docker_nextcloud__integrity_check_disabled: no
 # database
 #
 
+docker_nextcloud_mariadb_image_tag: latest
 docker_nextcloud_database_password_nextcloud: 'nextcloud-db-password'
 docker_nextcloud_database_password_root: 'root-db-password'
 
