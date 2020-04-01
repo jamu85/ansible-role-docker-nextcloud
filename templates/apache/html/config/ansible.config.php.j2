@@ -29,6 +29,8 @@ $CONFIG = array (
 {% endif %}
 
 {% if docker_nextcloud__integrity_check_disabled %}
-'integrity.check.disabled' => true
+'integrity.check.disabled' => true,
 {% endif %}
+
+'overwriteprotocol' => 'https',
 );
